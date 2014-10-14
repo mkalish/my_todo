@@ -1,0 +1,119 @@
+<head>
+  <title>bullet_todo</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Bullet Todo</h1>
+        <div class="col-sm-8">
+            {{> todoList}} 
+        </div>
+        <div class="col-sm-4">    
+            {{> add_todo}}            
+        </div>
+
+    </div>
+</body>
+
+<template name="add_todo">
+    <div class="todo">
+        <select id="todo_type" class="form-control" name="todo_type">
+            <option value="">Select a type</option>
+            <option value="note">Note</option>
+            <option value="todo">Todo</option>
+            <option value="event">Event</option>
+        </select>
+        <select id="signifier" class="form-control" name="signifier">
+            <option value="">Select a signifier</option>
+            <option value="priority">Priority</option>
+            <option value="explore">Explore</option>
+            <option value="inspiration">Inspiration</option>
+        </select>
+        <div class="input-group">
+            <input type="text" class="form-control" id="title"/>
+            <span class="input-group-btn">
+                <button id="add_todo" class="btn btn-default btn-primary">Add</button>
+            </span>
+        </div>
+    </div>
+</template>
+
+<template name="note">
+    <div>
+        <input type="text" id="title"/>
+    </div>
+</template>
+
+<template name="todoList">
+    <div class="input-group col-sm-6">
+        <div class="input-group-btn">
+            <button class="dropdown-toggle btn btn-default" type="button" id="listDropDownMenu" data-toggle="dropdown">
+                {{listName}}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="listDropDownMenu">
+                {{#each lists}}
+                    <li class="presentation">
+                        <a href="#" tabindex="-1" id="{{name}}" class="list_entry" role="menuitem">{{name}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        <input class="form-control" type="text" id="new_list"/>
+        <span class="input-group-btn">
+            <button id="add_list" type="button" class="btn btn-default btn-large">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+            </button>
+        </span>
+    </div>
+    {{#each todos}}
+        <div class="row todo_entry" data-model="{{_id}}">
+            <div class="col-md-1">
+                    <span class="{{bulletSignifier signifier}}"></span>
+            </div>
+            <div class="col-md-1">
+                <span class="{{bulletType .}}"></span>
+            </div>
+            <div class="col-md-8">
+                    <span>{{title}}</span>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-secondary edit_todo">Edit</button>
+            </div>
+            {{> todo_edit .}}
+        </div>
+    {{/each}}
+</template>
+
+
+<template name="todo_edit">
+    <div class="modal todo_edit" role="dialog" aria-hidden="true" aria-labelledby="todoEdit" id="{{_id}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit this bullet</h2>
+                </div>
+                <div class="modal-body input-group">
+                    <input type="text" class="form-control edit_title" value="{{title}}"/>
+                    <button class="btn btn-primary submit_edit">Save</button>
+                </div>  
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
